@@ -1,0 +1,9 @@
+def is_funny(string):
+    return all(letter == 'h' or letter == 'a' for letter in string)
+    
+def main():
+    print(is_funny("hahahahahaha"))
+    print(is_funny("hahlhalahaha"))
+    
+if __name__ == '__main__':
+    main()
