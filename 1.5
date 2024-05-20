@@ -1,0 +1,23 @@
+import functools
+
+def longest_name(file):
+    print (max(open(file, 'r').read().split('\n'), key=len))
+
+def sum_lens(file):
+    print (sum(map(lambda x: len(x), open(file, 'r').read().split('\n')))) 
+
+def shortest_names(file):
+    list1 = open(file, 'r').read().split('\n')
+    shortest_words = [word for word in list if len(word) == len(min(list1, key=len))]
+    print ("\n".join(shortest_words))
+
+def lens_of_words(file):
+    with open(r"C:\Users\zohar\lengths.txt", "w") as f:
+        f.writelines('\n'.join(map(str, [len(x) for x in open(file1, 'r').read().split('\n')])))
+
+def print_len_words(file):
+    length = input("Enter name length:)
+    shortest_words = [word for word in open(file, 'r').read().split('\n') if len(word) == length]
+    print ("\n".join(shortest_words))
+
+
