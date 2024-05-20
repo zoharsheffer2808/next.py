@@ -20,4 +20,13 @@ def print_len_words(file):
     shortest_words = [word for word in open(file, 'r').read().split('\n') if len(word) == length]
     print ("\n".join(shortest_words))
 
-
+def main():
+    path = "C:\Users\zohar\words.txt"
+    print (longest_name(path))
+    print (sum_lens(path))
+    print(shortest_names(path))
+    print(lens_of_words(path))
+    print (print_len_words(path))
+    
+if __name__ == '__main__':
+    main()
