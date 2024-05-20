@@ -53,8 +53,7 @@ class Skunk(Animal):
         self._stink_count = stink_count
 
     def __str__(self):
-        return 'Skunk {}'.format(
-            self._name)
+        return 'Skunk {}'.format(self._name)
 
     def talk(self):
         super().talk('tsssss')
@@ -110,7 +109,7 @@ def main():
     
     for animal in zoo_list:
         if animal.is_hungry():
-            print(animal, animal.get_name())
+            print(animal)
         while animal.is_hungry():
             animal.feed()
         animal.talk()
