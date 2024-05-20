@@ -1,0 +1,19 @@
+class Dog():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age 
+
+    def birthday(self):
+        self.age += 1
+
+    def get_age(self):
+        return self.age
+
+def main():
+        dog1 = Dog('Toy', 2)
+        dog2 = Dog('Shoko', 4)
+        dog1.birthday()
+        print(dog1.get_age(), dog2.get_age())
+
+main()
+    
