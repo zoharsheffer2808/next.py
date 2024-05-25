@@ -3,7 +3,7 @@ class UnderAgeException(Exception):
         self._age = age 
 
     def __str__(self):
-        print(f"your age is under 18, you are {self._age} , you have more {18-self._age} years") 
+        return f"your age is under 18, you are {self._age} , you have more {18-self._age} years" 
 
 
 def send_invitation(name, age):
