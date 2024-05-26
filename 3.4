@@ -1,0 +1,158 @@
+class UsernameContainsIllegalCharacter(Exception):
+    def __init__(self, arg, index):
+        self._arg = arg
+        self._index = index
+
+    def __str__(self):
+        return f'The username contains an illegal character "{self._arg}" at index {self._index}'
+
+class UsernameTooShort(Exception):
+    def __init__(self, arg):
+        self._arg = arg
+
+    def __str__(self):
+        return "The username is too short"
+
+class UsernameTooLong(Exception):
+    def __init__(self, arg):
+        self._arg = arg
+
+    def __str__(self):
+        return "The username is too long"
+        
+class PasswordTooShort(Exception):
+    def __init__(self, arg):
+        self._arg = arg
+
+    def __str__(self):
+        return "The password is too short"
+
+class PasswordTooLong(Exception):
+    def __init__(self, arg):
+        self._arg = arg
+
+    def __str__(self):
+        return "The password is too long"
+
+class PasswordMissingCharacter(Exception):
+    def __init__(self, arg):
+        self._arg = arg
+        
+    def __str__(self):
+        return "The password is missing a character"
+
+class PasswordMissingUpper(PasswordMissingCharacter):
+    def __init__(self, arg):
+        super().__init__(arg)
+        
+    def __str__(self):
+        return super().__str__() + " (Uppercase)"
+
+
+class PasswordMissingLower(PasswordMissingCharacter):
+    def __init__(self, arg):
+        super().__init__(arg)
+        
+    def __str__(self):
+        return super().__str__() + " (Lowercase)"
+
+
+class PasswordMissingDigit(PasswordMissingCharacter):
+    def __init__(self, arg):
+        super().__init__(arg)
+        
+    def __str__(self):
+        return super().__str__() + " (Digit)"
+
+
+class PasswordMissingSpecial(PasswordMissingCharacter):
+    def __init__(self, arg):
+        super().__init__(arg)
+        
+    def __str__(self):
+        return super().__str__() + " (Special)"
+        
+def check_input(username, password):
+    """
+    Checks whether the username & password are valid or not
+    :param username: The username to check
+    :type username: str
+    :param password: The password to check
+    :type password: str
+    :return: None
+    :raises UsernameContainsIllegalCharacter: If username contains illegal chars
+    :raises UsernameTooShort: If username is too short
+    :raises UsernameTooLong: If username is too long
+    :raises PasswordTooShort: If password is too short
+    :raises PasswordTooLong: If password is too long
+    :raises PasswordMissingUpper: If password is missing an uppercase char
+    :raises PasswordMissingLower: If password is missing a lowercase char
+    :raises PasswordMissingDigit: If password is missing a digit
+    :raises PasswordMissingSpecial: If password is missing a special char
+    """
+    special_chars = set('!"#$%&\'()*+, -./:;<=>?@[\\]^_`{|}~')
+    for sign in username:
+        if not (sign == "_" or sign.isalpha() or sign.isdigit()): 
+            raise UsernameContainsIllegalCharacter(sign, username.index(sign))
+    if len(username) < 3:
+        raise UsernameTooShort(username)
+    if len(username) > 16:
+        raise UsernameTooLong(username)
+    if len(password) < 8:
+        raise PasswordTooShort(password)
+    if len(password) > 40:
+        raise PasswordTooLong(password)
+
+    # Check characters in password
+    has_uppercase = has_lowercase = has_digit = has_special = False
+    for char in password:
+        if char.isupper():
+            has_uppercase = True
+        elif char.islower():
+            has_lowercase = True
+        elif char.isdigit():
+            has_digit = True
+        elif char in special_chars:
+            has_special = True
+    if not has_uppercase:
+        raise PasswordMissingUpper(password)
+    if not has_lowercase:
+        raise PasswordMissingLower(password)
+    if not has_digit:
+        raise PasswordMissingDigit(password)
+    if not has_special:
+        raise PasswordMissingSpecial(password)
+
+def main():
+    valid_details = False
+    while not valid_details:
+        username = input("Enter username: ")
+        password = input("Enter password: ")
+        try:
+            check_input(username, password)
+        except UsernameContainsIllegalCharacter as e:
+            print(e)
+        except UsernameTooShort as e:
+            print(e)
+        except UsernameTooLong as e:
+            print(e)
+        except PasswordMissingUpper as e:
+            print(e)
+        except PasswordMissingLower as e:
+            print(e)
+        except PasswordMissingDigit as e:
+            print(e)
+        except PasswordMissingSpecial as e:
+            print(e)
+        except PasswordTooShort as e:
+            print(e)
+        except PasswordTooLong as e:
+            print(e)
+        #Username & password are valid!
+        else: 
+            print ("ok")
+            valid_details = True
+
+
+if __name__ == '__main__':
+    main()
