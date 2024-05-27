@@ -1,0 +1,30 @@
+NOTES_FREQUENCIES = [55, 61.74, 65.41, 73.42, 82.41, 87.31, 98]
+NUM_OF_OCTAVES = 5
+NOTES_PER_OCTAVE = len(NOTES_FREQUENCIES)
+TOTAL_NOTES = NOTES_PER_OCTAVE * NUM_OF_OCTAVES
+
+class MusicNotes():
+
+    def __init__(self):
+        self._index = -1 
+
+    def __next__(self):
+        self._index += 1
+        if self._index >= TOTAL_NOTES:
+            raise StopIteration 
+        col = self._index // NOTES_PER_OCTAVE
+        row = self._index % NOTES_PER_OCTAVE           
+        return  NOTES_FREQUENCIES[row] * (2**col)
+        
+    def __iter__(self):
+        return self  
+
+
+def main():
+    my_notes = MusicNotes()
+
+    for freq in my_notes:
+        print(freq)
+
+if __name__ == '__main__':
+    main()
