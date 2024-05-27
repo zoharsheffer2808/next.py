@@ -1,0 +1,83 @@
+MAX_ID = 999999999
+ 
+class IDIterator():
+    """
+    An iterator to go through possible valid ID numbers.
+    :param start_id: The ID number to start counting from. Default is 100_000_000.
+    :type start_id: int
+    :ivar _id = The current ID number of the iterator
+    """ 
+    def __init__(self, start_id = 100000000):
+        self._id = int(start_id)
+        
+    def __iter__(self):
+         return self 
+         
+    def __next__(self):
+        """
+        Finds the next valid ID in the iterator.
+        :return: Next valid ID
+        :rtype: int
+        :raises: StopIteration: If there are no more elements in the iterator
+        """
+        self._id += 1
+        while not check_id_valid(self._id):
+            self._id += 1
+
+        if self._id > MAX_ID:
+            raise StopIteration
+
+        return self._id
+
+def id_generator(current_id):
+    """
+    Generator function that calculates next valid ID number
+    :param current_id: The ID number to start calculating from. Default is 123456780.
+    :type current_id: int
+    :return: The next valid ID number, -1 if crossed max
+    :rtype: Generator[int, int, None]
+    """
+    current_id = int(current_id)
+    while True:
+        if current_id <= MAX_ID:
+            current_id += 1
+            while not check_id_valid(current_id):
+                current_id += 1
+            yield current_id
+        else:
+            yield -1
+
+def check_id_valid(id_number):
+    """
+    Check ID num validity according to Israel's ID num validity check algorithm.
+    :param id_number: The ID number to check
+    :type id_number: int
+    :return: Is the ID number is valid?
+    :rtype: bool
+    """ 
+    id_str = str(id_number)
+    sum_of_modified_digits = map(lambda x: int(x[1]) * 2 if (x[0] + 1) % 2 == 0 else int(x[1]), enumerate(id_str))
+    return sum(map(lambda x: x // 10 + x % 10 , sum_of_modified_digits)) % 10 == 0
+
+
+def main():
+    print(check_id_valid(123456780))
+    print(check_id_valid(123456782))
+    start_id = input("Enter ID: ")
+    user_type = input("Generator or Iterator? (gen/it)? ")
+    if "gen" in user_type:
+        my_id_generator = id_generator(start_id)
+        # Print next 10 valid ID numbers
+        for _ in range(10):
+            try:
+                print(next(my_id_generator))
+            except StopIteration:
+                print("Reached maximum of valid ID numbers!")
+                break
+    else:
+      it = IDIterator(start_id)
+      for _ in range (10):
+          print (next(it))
+
+if __name__ == '__main__':
+    main()
