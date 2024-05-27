@@ -1,0 +1,9 @@
+numbers = iter(list(range(1, 101)))
+
+while True:
+    try:
+        next(numbers)         # דילוג על המספר הבא
+        next(numbers)         # דילוג על המספר שאחריו
+        print(next(numbers))  # הדפסת המספר הנוכחי    
+    except StopIteration:
+        break  # אם האיטרטור נגמר, יוצאים מהלולאה
