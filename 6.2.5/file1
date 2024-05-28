@@ -4,4 +4,4 @@ class GreetingCard():
         self._sender = sender
 
     def greeting_msg():
-        print (f"the sender is: {self._sender}, the recipient is: {recipient}")
+        print (f"the sender is: {self._sender}, the recipient is: {self._recipient}")
